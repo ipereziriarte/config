@@ -1,0 +1,70 @@
+[user]
+	name = Imanol Pérez Iriarte
+	email = eltigrequehayenti@gmail.com
+
+[core]
+	# Make `git rebase` safer on macOs
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+
+[color]
+	ui = true
+	branch = auto
+	diff = auto
+	status = auto
+
+[color "branch"]
+	current = yellow black
+	local = yellow
+	remote = magenta
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red reverse
+	new = green reverse
+	whitespace = white reverse
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = cyan reverse
+
+[alias]
+	co = checkout
+	cia = commit -a
+	st = status
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	graph = log --graph --pretty=oneline --abbrev-commit
+
+	# Amends last commit with the index skipping the message editting
+	fixlast = commit --amend --no-edit
+
+	# Deletes local merged branches except for master and develop
+  bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | xargs -n 1 git branch -d"
+
+	# Deletes local merged branches (bclean) and branches remote references to deleted branches
+  roomba = "!f() { git fetch --prune; git bclean ; }; f"
+
+	# Deletes a branch locally and remotely (forced)
+  nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+
+	# Commits current changes with a "WIP" message
+	wip = commit -am "WIP"
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+
+	# Interactive rebase with the given number of latest commits
+	ri = "!r() { git rebase -i HEAD~$1; }; r"
+
+	rc = "rebase --continue"
+
+[fetch]
+	prune = true
+
+	# correct typos
+[help]
+	autocorrect = 1
